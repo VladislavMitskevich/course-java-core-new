@@ -17,8 +17,8 @@ public class Producer implements Runnable {
     public void run() {
         Scanner scanner = new Scanner(System.in);
 
-        if (scanner.hasNextInt()) {
-            while (scanner.hasNext()) {
+        while (scanner.hasNext()) {
+            if (scanner.hasNextInt()) {
                 int time = scanner.nextInt();
                 if (time > THREAD_OFF) {
                     queue.add(time);
@@ -30,12 +30,11 @@ public class Producer implements Runnable {
                     trappingException();
                     scanner.next();
                 }
+            } else {
+                trappingException();
+                scanner.next();
             }
-        } else {
-            trappingException();
-            scanner.next();
         }
-
     }
 
     private void trappingException() {
