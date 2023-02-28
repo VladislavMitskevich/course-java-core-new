@@ -27,17 +27,16 @@ public class Producer implements Runnable {
                     System.out.println("End of output");
                     break;
                 } else {
-                    trappingException();
-                    scanner.next();
+                    handleException();
                 }
             } else {
-                trappingException();
+                handleException();
                 scanner.next();
             }
         }
     }
 
-    private void trappingException() {
+    private void handleException() {
         try {
             throw new UserInputException("Enter an positive Integer!");
         } catch (UserInputException e) {

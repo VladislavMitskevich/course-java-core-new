@@ -1,4 +1,4 @@
-package com.rakovets.course.java.core.practice.concurrency.producer_queue_consumer.log;
+package com.rakovets.course.java.core.practice.concurrency.producer_queue_consumer.utils;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -6,24 +6,20 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class DoWriteToFile {
+public class FileCreator {
     private final File log;
 
-    public DoWriteToFile(String fileName) {
+    public FileCreator(String fileName) {
         this.log = new File(fileName);
     }
 
-    public void write(String txt) {
-        try {
-            FileWriter out = new FileWriter(txt, true);
+    public void write(String text) {
+        try (FileWriter out = new FileWriter(log, true)) {
             out.write(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss")) +
                     " - " + Thread.currentThread().getName() +
-                    " " + Thread.currentThread().getId() + " - " + txt + "\n");
-            out.flush();
-            out.close();
+                    " " + Thread.currentThread().getId() + " - " + text + "\n");
         } catch (IOException e) {
             e.printStackTrace();
-
         }
     }
 }

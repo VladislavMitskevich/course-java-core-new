@@ -1,33 +1,32 @@
 package com.rakovets.course.java.core.practice.concurrency.producer_queue_consumer.utils;
 
 import com.rakovets.course.java.core.practice.concurrency.producer_queue_consumer.publisher.Producer;
-import com.rakovets.course.java.core.practice.concurrency.producer_queue_consumer.subscriber.ConsumerImpl;
+import com.rakovets.course.java.core.practice.concurrency.producer_queue_consumer.subscriber.Consumer;
 
 import java.util.Queue;
 import java.util.concurrent.*;
 
 public class TreadUtils {
-    private Integer nThreads;
+    private Integer threadsAmount;
     private final Queue<Integer> queue;
 
-    public TreadUtils(Integer nThreads) {
-        this.nThreads = nThreads;
+    public TreadUtils(Integer threadsAmount) {
+        this.threadsAmount = threadsAmount;
         this.queue = new PriorityBlockingQueue<>();
     }
 
     public void start() {
-        ExecutorService executor = Executors.newFixedThreadPool(
-                nThreads);
+        ExecutorService executor = Executors.newFixedThreadPool(threadsAmount);
 
-        Future<?> future = executor.submit(new Producer(queue));
+        Future<?> future = executor.submit(new Producer(queue)); //extends
         try {
             future.get();
         } catch (InterruptedException | ExecutionException e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
 
-        for (; nThreads > 0; nThreads--) {
-            executor.execute(new ConsumerImpl(queue));
+        for (; threadsAmount > 0; threadsAmount--) {
+            executor.execute(new Consumer(queue));
         }
 
         executor.shutdown();

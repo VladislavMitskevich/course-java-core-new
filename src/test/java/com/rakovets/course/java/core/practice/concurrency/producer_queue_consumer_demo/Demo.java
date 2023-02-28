@@ -1,4 +1,4 @@
-package com.rakovets.course.java.core.practice.concurrency;
+package com.rakovets.course.java.core.practice.concurrency.producer_queue_consumer_demo;
 
 import com.rakovets.course.java.core.practice.concurrency.producer_queue_consumer.utils.TreadUtils;
 
